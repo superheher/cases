@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Partly draw a square between two dots on the circle.</h2>
+
+<a href="https://jsfiddle.net/bcdpo4zn/2/">Fiddle.</a>
+<br><br>
+
+<canvas id="myCanvas" width="600" height="300" style="border:1px solid grey"></canvas>
+
+<script>
+
+const toRadians = deg => (deg * Math.PI) / 180.0;
+const drawDot = (ctx, angle, radius, dot) => {
+  ctx.beginPath();
+  const x = radius * Math.cos(toRadians(angle));
+  const y = radius * Math.sin(toRadians(angle));
+  ctx.arc(x, y, 3, 0, 2 * Math.PI);
+  ctx.fillStyle = "green";
+  ctx.fill();
+  const offset = 10;
+  ctx.fillText(dot, x - offset, y - offset);
+}
+
+{
+  const side = 300;
+  const radius = 100;
+  const c = document.getElementById("myCanvas");
+  const ctx = c.getContext("2d");
+  ctx.translate(side / 2, side / 2);
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+  ctx.strokeStyle = "red";
+  ctx.stroke();
+
+  const startAngle = -70;
+  const endAngle = 0;
+
+  drawDot(ctx, startAngle, radius, "A");
+  drawDot(ctx, endAngle, radius, "B");
+  drawDot(ctx, -90, radius, "start");
+
+  ctx.beginPath();
+  ctx.moveTo(radius * Math.cos(toRadians(startAngle)), -radius);
+  ctx.lineTo(radius, -radius);
+  ctx.lineTo(radius, radius * Math.sin(toRadians(endAngle)), 0);
+  ctx.strokeStyle = "black";
+  ctx.stroke();
+}
+
+{
+  const side = 300;
+  const radius = 100;
+  const c = document.getElementById("myCanvas");
+  const ctx = c.getContext("2d");
+  ctx.translate(side, 0);
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+  ctx.strokeStyle = "red";
+  ctx.stroke();
+
+  const startAngle = -10;
+  const endAngle = 250;
+
+  drawDot(ctx, startAngle, radius, "A");
+  drawDot(ctx, endAngle, radius, "B");
+  drawDot(ctx, -90, radius, "start");
+
+  ctx.beginPath();
+  ctx.moveTo(radius, radius * Math.sin(toRadians(startAngle)));
+  ctx.lineTo(radius, radius);
+  ctx.lineTo(-radius, radius);
+  ctx.lineTo(-radius, -radius);
+  ctx.lineTo(radius * Math.cos(toRadians(endAngle)), -radius);
+  ctx.strokeStyle = "black";
+  ctx.stroke();
+}
+
+</script> 
+
+</body>
+</html>
